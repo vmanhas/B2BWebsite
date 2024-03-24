@@ -4,6 +4,8 @@
 
 This website is created using `React`, `node.js`, and `mongoDB`.
 
+![Home page](./utils/homepage-ss-b2b.png)
+
 ## Instructions
 
 ```sh

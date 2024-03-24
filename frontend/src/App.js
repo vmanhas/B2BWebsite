@@ -1,22 +1,46 @@
 import React, { useEffect, useState } from 'react';
 
+import {Paper, Toolbar, Typography, Grid} from '@mui/material';
+
+import SearchBar from './components/searchBar';
+import ProductCard from './components/productCard';
+
 function App() {
-  const [data, setData] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [allResults, setAllResults] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('http://localhost:5000/api');
       const responseData = await response.json();
-      setData(responseData);
+      setProducts(responseData);
+      setAllResults(responseData);
     };
 
     fetchData();
   }, []);
 
+  function handleSearch(searchTerm) {
+    var filteredResults = allResults.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setProducts(filteredResults);
+  };
+
   return (
-    <div>
-      <h1>Backend Data</h1>
-      <p>Data from backend: {JSON.stringify(data)}</p>
+    <div className='App-header'>
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Autonify Platform - B2B solution for Robotics automation needs!
+        </Typography>
+      </Toolbar>
+      <SearchBar onSearch={handleSearch}/>
+      <Paper/>
+      <Grid container spacing={2} alignItems="center" justifyContent="center">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </Grid>
     </div>
   );
 }
