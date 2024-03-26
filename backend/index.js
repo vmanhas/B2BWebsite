@@ -25,5 +25,13 @@ app.get('/api', async (req, res) => {
     res.status(500).json({ message: "Error retrieving products" });
   }  
 });
+app.get('/signup', async(req,res)=>{
+  try{
+    res.render(".")
 
+  } catch(error){
+    console.error("Error getting value");
+
+  }
+})
 app.listen(5000, () => console.log('Backend listening on port 5000'));
